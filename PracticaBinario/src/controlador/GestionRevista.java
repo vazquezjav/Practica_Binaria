@@ -71,10 +71,9 @@ public class GestionRevista {
 			re.setArticulo(ar);
 			FileOutputStream file = new FileOutputStream(pathRevistas, true);
 			DataOutputStream escr = new DataOutputStream(file);
-			String registro = "Nombre Revista=" + re.getNombre() + " " + "Editoria=" + re.getEditorial() + " "
-					+ "Nombre Aticulo=" + re.getArticulo();
-			escr.writeUTF("DATOS DE LA REVISTA" + "\n");
-			escr.writeUTF(registro + "\n");
+			escr.writeUTF(nombreR);
+			escr.writeUTF(editorial);
+			
 			escr.close();
 			file.close();
 
@@ -109,8 +108,6 @@ public class GestionRevista {
 				art.setIdioma(idioma);
 				art.setTema(tema);
 				articulos.add(art);
-				System.out.println(nombre+"/"+apellido+"/"+nacionalidad+"/"+tema+"/"+idioma+"\n");
-				System.out.println(line);
 
 			}
 
