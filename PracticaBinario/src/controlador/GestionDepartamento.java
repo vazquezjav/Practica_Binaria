@@ -2,7 +2,11 @@ package controlador;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,8 +24,8 @@ public class GestionDepartamento {
 	private List<Empresa> empresas;
 	private List<Departamento> departamentos;
 	private List<Empleado> empleados;
-	private String pathEmpresa = "src/archivos/empresa.txt";
-	private String pathDepartamento = "src/archivos/Departamento.txt";
+	private String pathEmpresa = "PracticaBinario/src/archivos/Empresas.dat";
+	private String pathDepartamento = "PracticaBinario/src/archivos/Departamentos.dat";
 
 	public GestionDepartamento() {
 		empresas = new ArrayList<Empresa>();
@@ -43,10 +47,14 @@ public class GestionDepartamento {
 			depa.setEmpleados(em);
 			departamentos.add(depa);
 
-			FileWriter file = new FileWriter(pathDepartamento,true);
-			BufferedWriter escr = new BufferedWriter(file);
-			String registro = "Nombre del departamento :"+depa.getNombredepa()+" codigo del departamento :"+depa.getCodigo()+" "+depa.getEmpleados();
-			escr.append(registro + "\n");
+			FileOutputStream file = new FileOutputStream(pathDepartamento, true);
+			DataOutputStream escr = new DataOutputStream(file);
+			escr.writeUTF(nombreEm);
+			escr.writeUTF(apellidoEm);
+			escr.writeUTF(cedula);
+			escr.writeUTF(nombreDepa);
+			escr.writeUTF(codigo);
+		//	escr.writeUTF(em);
 			escr.close();
 			file.close();
 
@@ -62,11 +70,13 @@ public class GestionDepartamento {
 			emp.setDireccion(direccion);
 			emp.setDepartamentos(departamento);
 			empresas.add(emp);
-			FileWriter file = new FileWriter(pathEmpresa, true);
-			BufferedWriter escr = new BufferedWriter(file);
-			String registro = emp.getNombre() + " " + emp.getRuc() + " " + emp.getDireccion() + " "
-					+ emp.getDepartamentos();
-			escr.append(registro);
+			
+			FileOutputStream file = new FileOutputStream(pathEmpresa, true);
+			DataOutputStream escr = new DataOutputStream(file);
+			escr.writeUTF(nombre);
+			escr.writeUTF(ruc);
+			escr.writeUTF(direccion);
+			//escr.writeUTF(departamento);
 			escr.close();
 			file.close();
 
@@ -131,42 +141,71 @@ public class GestionDepartamento {
 	public List<Empleado> getEmpleados() {
 		return empleados;
 	}
-	public String leerDepartamento() throws IOException {
+public List<Departamento> leerDepartamento() throws IOException {
+		
 		String aux = "";
+		FileInputStream lec = null;
+		DataInputStream entrada = null;
 		try {
-			FileReader l = new FileReader(pathDepartamento);
-			BufferedReader es = new BufferedReader(l);
-			String linea = "";
-			while (linea != null) {
-				linea = es.readLine();
-				aux = aux + "" + linea + "\n";
+			String ruta = pathEmpresa;
+			String line = "";
+			lec = new FileInputStream(ruta);
+			entrada = new DataInputStream(lec);
+			while (true) {
+				String nombreEm = entrada.readUTF();
+				String apellidoEm = entrada.readUTF();
+				String cedula = entrada.readUTF();
+				String nombredepa = entrada.readUTF();
+				String codigo= entrada.readUTF();
+				Empleado em=new Empleado();
+				em.setNombreEm(nombreEm);
+				em.setApellidoEm(apellidoEm);
+				em.setCedula(cedula);
+				Departamento depa=new Departamento();
+				depa.setNombredepa(nombredepa);
+				depa.setCodigo(codigo);
+				depa.setEmpleados(em);
+				departamentos.add(depa);
 
 			}
-			es.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return aux;
 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			entrada.close();
+		}
+		return departamentos;
 	}
 	
-	public String leerEmpresa() throws IOException {
-		String aux = "";
-		try {
-			FileReader l = new FileReader(pathEmpresa);
-			BufferedReader es = new BufferedReader(l);
-			String linea = "";
-			while (linea != null) {
-				linea = es.readLine();
-				aux = aux + "" + linea + "\n";
-
-			}
-			es.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+public List<Empresa> leerEmpresa() throws IOException {
+	
+	String aux = "";
+	FileInputStream lec = null;
+	DataInputStream entrada = null;
+	try {
+		String ruta = pathEmpresa;
+		String line = "";
+		lec = new FileInputStream(ruta);
+		entrada = new DataInputStream(lec);
+		while (true) {
+			String nombre = entrada.readUTF();
+			String ruc = entrada.readUTF();
+			String direccion= entrada.readUTF();
+			String nombredepa = entrada.readUTF();
+			String codigo= entrada.readUTF();
+			Empresa emp=new Empresa();
+			emp.setNombre(nombre);
+			emp.setRuc(ruc);
+			emp.setDireccion(direccion);
+			empresas.add(emp);
 		}
-		return aux;
 
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}finally {
+		entrada.close();
 	}
+	return empresas;
+}
 	
 }

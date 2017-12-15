@@ -41,7 +41,6 @@ public class GestionRevista {
 		au.setApellido(apellido);
 		au.setNacionalidad(nacionalidad);
 		autores.add(au);
-
 		Articulo ar = new Articulo();
 		ar.setIdioma(idioma);
 		ar.setTema(temaAr);

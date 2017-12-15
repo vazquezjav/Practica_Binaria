@@ -154,13 +154,13 @@ public class VisRevista extends JInternalFrame implements ActionListener {
 			guardar();
 			break;
 		case "leer":
-			try {
-				leer();
-			} catch (IOException e) {
+			//try {
+				//leer();
+			//} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			break;
+				//e.printStackTrace();
+			///}
+			//break;
 		default:
 			break;
 		}
@@ -186,11 +186,10 @@ public class VisRevista extends JInternalFrame implements ActionListener {
 		nombre.setText("");
 		editorial.setText("");
 	}
-	public void leer() throws IOException{
-
-		listado.append(gr.leerRevista
-				());	
-	}
+//	public void leer() throws IOException{
+//
+//		listado.append(gr.leerRevista());	
+//	}
 
 	public void listar() {
 		List<Revista> revistas = gr.getRevistas();
