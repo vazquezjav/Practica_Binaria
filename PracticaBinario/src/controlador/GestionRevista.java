@@ -24,8 +24,8 @@ public class GestionRevista {
 	private List<Articulo> articulos;
 	private List<Autor> autores;
 
-	protected String pathRevistas = "src/archivos/Revistas.txt";
-	private String pathArticulos = "src/archivos/Articulos.dat";
+	protected String pathRevistas = "PracticaBinario/src/archivos/Articulos.dat";
+	private String pathArticulos = "PracticaBinario/src/archivos/Articulos.dat";
 
 	public GestionRevista() {
 		revistas = new ArrayList<Revista>();
