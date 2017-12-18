@@ -9,21 +9,22 @@ import modelo.revista.Articulo;
 import modelo.revista.Autor;
 import modelo.revista.Revista;
 
-public class ModeloRevista extends AbstractTableModel{
+public class ModeloRevista extends AbstractTableModel {
 
-
-	public String []columnas ={"Articulo","Nombre","Editorial"};
-	public Class[] columnasTipos={ String.class, String.class, String.class};
+	public String[] columnas = { "Nombre", "Editorial", "Codigo" };
+	public Class[] columnasTipos = { String.class, String.class, String.class };
 	private List<Revista> datos;
-	
-	public ModeloRevista(){
+
+	public ModeloRevista() {
 		super();
-		datos= new ArrayList<Revista>();
+		datos = new ArrayList<Revista>();
 	}
-	public ModeloRevista(List<Revista> datos){
+
+	public ModeloRevista(List<Revista> datos) {
 		super();
-		this.datos=datos;
+		this.datos = datos;
 	}
+
 	public int getColumnCount() {
 		return columnas.length;
 	}
@@ -32,44 +33,45 @@ public class ModeloRevista extends AbstractTableModel{
 		return datos.size();
 	}
 
-	public void setValueAt(Object value, int row, int col){
-		Revista dato=(Revista)(datos.get(row));
-		switch(col){
+	public void setValueAt(Object value, int row, int col) {
+		Revista dato = (Revista) (datos.get(row));
+		switch (col) {
 		case 0:
-			dato.setArticulo((Articulo) value);
-			break;
-		case 1:
 			dato.setNombre((String) value);
 			break;
-		case 2:
+		case 1:
 			dato.setEditorial((String) value);
 			break;
-			default:
+		case 2:
+			dato.setCodigo((int) value);
+			break;
+		default:
 			break;
 		}
 	}
 
-	public String getColumnName(int col){
+	public String getColumnName(int col) {
 		return columnas[col];
 	}
-	public Class getColumnClass(int col){
+
+	public Class getColumnClass(int col) {
 		return columnasTipos[col];
 	}
-	
+
 	@Override
 	public Object getValueAt(int row, int col) {
-		Revista dato=(Revista)(datos.get(row));
-		switch(col){
+		Revista dato = (Revista) (datos.get(row));
+		switch (col) {
 		case 0:
-			return dato.getArticulo();
-		case 1:
 			return dato.getNombre();
-		case 2:
+		case 1:
 			return dato.getEditorial();
-			default:
-				break;
+		case 2:
+			return dato.getCodigo();
+		default:
+			break;
 		}
-		
+
 		return new String();
 	}
 

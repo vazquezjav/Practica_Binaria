@@ -22,6 +22,7 @@ import controlador.GestionDepartamento;
 import controlador.GestionPaciente;
 import controlador.GestionRevista;
 import vista.Revista.VisArticulo;
+import vista.Revista.VisAutor;
 import vista.Revista.VisRevista;
 import vista.Revista.VisTablaArticulo;
 import vista.Revista.VisTablaAutor;
@@ -79,15 +80,20 @@ public class MiVentana extends JFrame implements ActionListener {
 
 		// Menu revistas
 		JMenu revistas = new JMenu("Revistas");
-		JMenuItem mnuVentana1 = new JMenuItem("Datos Articulo");
-		mnuVentana1.addActionListener(this);
-		mnuVentana1.setActionCommand("mnuVentana1");
-		revistas.add(mnuVentana1);
-
 		JMenuItem mnuVentana2 = new JMenuItem("Datos Revista");
 		mnuVentana2.addActionListener(this);
 		mnuVentana2.setActionCommand("mnuVentana2");
 		revistas.add(mnuVentana2);
+		
+		JMenuItem mnuVentana1 = new JMenuItem("Datos Articulo");
+		mnuVentana1.addActionListener(this);
+		mnuVentana1.setActionCommand("mnuVentana1");
+		revistas.add(mnuVentana1);
+		
+		JMenuItem mnuVentanaAu = new JMenuItem("Datos Autor");
+		mnuVentanaAu.addActionListener(this);
+		mnuVentanaAu.setActionCommand("mnuVentanaAu");
+		revistas.add(mnuVentanaAu);
 
 		JMenuItem lisAutores = new JMenuItem("Lista Autores");
 		lisAutores.addActionListener(this);
@@ -137,6 +143,9 @@ public class MiVentana extends JFrame implements ActionListener {
 		System.out.println(comando);
 
 		switch (comando) {
+		case "mnuVentanaAu":
+			datoAutor();
+			break;
 		case "mnuVentana1":
 			datoArticulo();
 			break;
@@ -206,6 +215,16 @@ public class MiVentana extends JFrame implements ActionListener {
 		escritorio.add(va);
 		try {
 			va.setSelected(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void datoAutor(){
+		VisAutor au= new VisAutor(gr);
+		au.setVisible(true);
+		escritorio.add(au);
+		try {
+			au.setSelected(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -7,11 +7,12 @@ import javax.swing.table.AbstractTableModel;
 
 import modelo.revista.Articulo;
 import modelo.revista.Autor;
+import modelo.revista.Revista;
 
 public class ModeloArticulo extends AbstractTableModel {
 
-	public String[] columnas = { "Autor", "Tema", "Idioma" };
-	public Class[] columnasTipos = { String.class, String.class, String.class };
+	public String[] columnas = { "Tema", "Pagina", "Codigo" , "Revista"};
+	public Class[] columnasTipos = { String.class, String.class, String.class, String.class };
 	private List<Articulo> datos;
 
 	public ModeloArticulo() {
@@ -36,14 +37,16 @@ public class ModeloArticulo extends AbstractTableModel {
 		Articulo dato = (Articulo) (datos.get(row));
 		switch (col) {
 		case 0:
-			dato.setAutor((Autor) value);
-			break;
-		case 1:
 			dato.setTema((String) value);
 			break;
-		case 2:
-			dato.setIdioma((String) value);
+		case 1:
+			dato.setPagina((String) value);
 			break;
+		case 2:
+			dato.setCodigo((int)value);
+			break;
+		case 3:
+			dato.setRevistas((Revista)value);
 		default:
 			break;
 		}
@@ -62,11 +65,13 @@ public class ModeloArticulo extends AbstractTableModel {
 		Articulo dato = (Articulo) (datos.get(row));
 		switch (col) {
 		case 0:
-			return dato.getAutor();
-		case 1:
 			return dato.getTema();
+		case 1:
+			return dato.getPagina();
 		case 2:
-			return dato.getIdioma();
+			return dato.getCodigo();
+		case 3:
+			return dato.getRevistas();
 		default:
 			break;
 		}

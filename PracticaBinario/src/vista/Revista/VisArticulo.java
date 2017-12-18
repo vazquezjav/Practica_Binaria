@@ -25,9 +25,8 @@ import modelo.revista.Revista;
 
 public class VisArticulo extends JInternalFrame implements ActionListener {
 
-	private JTextField nombreA, apellidoA, nacionalidad, idioma, tema;
-	private JLabel etnombre, etapellido, etnacionalidad, etidioma, ettema;
-	private JTextArea listado;
+	private JTextField paguina, codigoAr, codigoRe, tema;
+	private JLabel etpaguina, etcodigoAr, etcodigoRe, ettema;
 	private JButton guardar, leer;
 	private GestionRevista gr;
 
@@ -46,19 +45,16 @@ public class VisArticulo extends JInternalFrame implements ActionListener {
 		setTitle("Aspirante");
 		initComponents();
 
-		nombreA = new JTextField(10);
-		apellidoA = new JTextField(10);
-		nacionalidad = new JTextField(10);
-		idioma = new JTextField(10);
+		paguina = new JTextField(10);
+		codigoAr = new JTextField(10);
+		codigoRe = new JTextField(10);
 		tema = new JTextField(10);
-		etnombre = new JLabel("Nombre:");
-		etapellido = new JLabel("Apellido:");
-		etnacionalidad = new JLabel("Nacionalidad:");
-		etidioma = new JLabel("Idioma:");
+		etpaguina = new JLabel("Paguina:");
+		etcodigoAr = new JLabel("Codigo:");
+		etcodigoRe = new JLabel("Codigo Revista:");
 		ettema = new JLabel("Tema:");
 		guardar = new JButton("Guardar");
 		leer = new JButton("Leer");
-		listado = new JTextArea(3, 15);
 
 		JPanel pan = new JPanel();
 
@@ -68,87 +64,60 @@ public class VisArticulo extends JInternalFrame implements ActionListener {
 		GridBagConstraints cp2 = new GridBagConstraints();
 		cp2.gridx = 0;
 		cp2.gridy = 0;
-		pan.add(etnombre, cp2);
+		pan.add(ettema, cp2);
 
 		cp2 = new GridBagConstraints();
 		cp2.gridx = 1;
 		cp2.gridy = 0;
 
-		pan.add(nombreA, cp2);
+		pan.add(tema, cp2);
 
 		cp2 = new GridBagConstraints();
 		cp2.gridx = 0;
 		cp2.gridy = 1;
 
-		pan.add(etapellido, cp2);
+		pan.add(etcodigoAr, cp2);
 
 		cp2 = new GridBagConstraints();
 		cp2.gridx = 1;
 		cp2.gridy = 1;
 
-		pan.add(apellidoA, cp2);
+		pan.add(codigoAr, cp2);
 
 		cp2 = new GridBagConstraints();
 		cp2.gridx = 0;
 		cp2.gridy = 2;
 
-		pan.add(etnacionalidad, cp2);
+		pan.add(etpaguina, cp2);
 
 		cp2 = new GridBagConstraints();
 		cp2.gridx = 1;
 		cp2.gridy = 2;
 
-		pan.add(nacionalidad, cp2);
+		pan.add(paguina, cp2);
+		
+		cp2 = new GridBagConstraints();
+		cp2.gridx = 0;
+		cp2.gridy = 3;
 
-		pan.setBorder(BorderFactory.createTitledBorder("Datos Autor"));
-		cp1.add(pan, BorderLayout.NORTH);
+		pan.add(etcodigoRe, cp2);
 
-		JPanel pan2 = new JPanel();
-		pan2.setLayout(new GridBagLayout());
-		GridBagConstraints cp3 = new GridBagConstraints();
-		cp3.gridx = 0;
-		cp3.gridy = 0;
-		pan2.add(ettema, cp3);
+		cp2 = new GridBagConstraints();
+		cp2.gridx = 1;
+		cp2.gridy = 3;
 
-		cp3 = new GridBagConstraints();
-		cp3.gridx = 1;
-		cp3.gridy = 0;
-		pan2.add(tema, cp3);
+		pan.add(codigoRe, cp2);
+		
+		cp2 = new GridBagConstraints();
+		cp2.gridx = 0;
+		cp2.gridy = 4;
+		cp2.gridwidth = 2;
+		cp2.fill = 1;
+		pan.add(guardar, cp2);
 
-		cp3 = new GridBagConstraints();
-		cp3.gridx = 0;
-		cp3.gridy = 1;
-		pan2.add(etidioma, cp3);
+		pan.setBorder(BorderFactory.createTitledBorder("Datos Articulo"));
+		cp1.add(pan, BorderLayout.CENTER);
 
-		cp3 = new GridBagConstraints();
-		cp3.gridx = 1;
-		cp3.gridy = 1;
-		pan2.add(idioma, cp3);
-
-		cp3 = new GridBagConstraints();
-		cp3.gridx = 0;
-		cp3.gridy = 2;
-		cp3.gridwidth = 2;
-		cp3.fill = 1;
-		pan2.add(guardar, cp3);
-
-		pan2.setBorder(BorderFactory.createTitledBorder("Dator Articulo"));
-		cp1.add(pan2, BorderLayout.CENTER);
-
-		JPanel pan3 = new JPanel();
-		pan3.setLayout(new GridBagLayout());
-		GridBagConstraints cp4 = new GridBagConstraints();
-		cp4.gridx = 0;
-		cp4.gridy = 0;
-		pan3.add(listado, cp4);
-
-		cp4 = new GridBagConstraints();
-		cp4.gridx = 0;
-		cp4.gridy = 1;
-		pan3.add(leer, cp4);
-
-		pan3.setBorder(BorderFactory.createTitledBorder("Leer Datos"));
-		cp1.add(pan3, BorderLayout.SOUTH);
 
 		guardar.addActionListener(this);
 		guardar.setActionCommand("guardar");
@@ -167,14 +136,7 @@ public class VisArticulo extends JInternalFrame implements ActionListener {
 		switch (comando) {
 		case "guardar":
 			guardar();
-			break;
-		case "leer":
-			try {
-				leer();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
 			break;
 		default:
 			break;
@@ -182,13 +144,15 @@ public class VisArticulo extends JInternalFrame implements ActionListener {
 	}
 
 	public void guardar() {
+		String cod= codigoAr.getText();
+		String codR= codigoRe.getText();
+		int cod1= Integer.parseInt(cod);
+		int codR1=Integer.parseInt(codR);
 		try {
-			if (gr.validarEspacio(nombreA.getText(), apellidoA.getText(), nacionalidad.getText(), tema.getText(),
-					idioma.getText())) {
-				if (gr.validarAutor(nombreA.getText(), apellidoA.getText(), nacionalidad.getText())) {
-					if (gr.validarArticulo(tema.getText(), idioma.getText())) {
-						gr.agregarArticulo(nombreA.getText(), apellidoA.getText(), nacionalidad.getText(),
-								tema.getText(), idioma.getText());
+			if (gr.validarEspacio(paguina.getText(), codigoAr.getText(), codigoRe.getText(), tema.getText(),null)) {
+				if(gr.validarCodigoRevista(codR1)){
+					if (gr.validarArticulo(tema.getText(), cod1)) {
+						gr.agregarArticulo(tema.getText(),paguina.getText(), cod1, codR1);
 						JOptionPane.showMessageDialog(this, "Articulo registrado", "Mensaje de información",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -200,25 +164,19 @@ public class VisArticulo extends JInternalFrame implements ActionListener {
 
 			// e.printStackTrace();
 		}
-		nombreA.setText("");
-		apellidoA.setText("");
-		nacionalidad.setText("");
+		paguina.setText("");
+		codigoAr.setText("");
+		codigoRe.setText("");
 		tema.setText("");
-		idioma.setText("");
 		listar();
 	}
 
-	public void leer() throws IOException {
-//		listado.append(gr.leerArticulo());
-	}
 
 	public void listar() {
 		List<Articulo> articulos = gr.getArticulos();
 		for (int i = 0; i < articulos.size(); i++) {
 			Articulo u = articulos.get(i);
-			System.out.println("Nombre=" + u.getTema() + "apellido=" + u.getAutor().getApellido() + "Idioma="
-					+ u.getIdioma() + "Autor=" + u.getAutor());
-
+			System.out.println("Nombre=" + u.getTema() + "apellido=" );
 		}
 	}
 }

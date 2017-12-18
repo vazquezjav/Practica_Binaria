@@ -2,16 +2,28 @@ package modelo.revista;
 
 public class Articulo {
 
-	private Autor autor;
+	private Revista revistas;
 	private String tema;
-	private String idioma;
+	private String pagina;
+	private int codigo;
 
-	public Autor getAutor() {
-		return autor;
+
+	public Revista getRevistas() {
+		return revistas;
 	}
 
-	public void setAutor(Autor autor) {
-		this.autor = autor;
+	public void setRevistas(Revista revistas) {
+		this.revistas = revistas;
+	}
+
+
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getTema() {
@@ -22,12 +34,13 @@ public class Articulo {
 		this.tema = tema;
 	}
 
-	public String getIdioma() {
-		return idioma;
+
+	public String getPagina() {
+		return pagina;
 	}
 
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
+	public void setPagina(String pagina) {
+		this.pagina = pagina;
 	}
 
 	public String toString() {

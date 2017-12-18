@@ -1,15 +1,17 @@
 package modelo.revista;
 
 public class Revista {
-	private Articulo articulo;
+	private int codigo;
 	private String nombre;
 	private String editorial;
+
+
 	
-	public Articulo getArticulo() {
-		return articulo;
+	public int getCodigo() {
+		return codigo;
 	}
-	public void setArticulo(Articulo articulo) {
-		this.articulo = articulo;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	public String getNombre() {
 		return nombre;

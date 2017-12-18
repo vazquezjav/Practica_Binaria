@@ -24,8 +24,9 @@ public class GestionRevista {
 	private List<Articulo> articulos;
 	private List<Autor> autores;
 
-	protected String pathRevistas = "PracticaBinario/src/archivos/Articulos.dat";
+	protected String pathRevistas = "PracticaBinario/src/archivos/Revistas.dat";
 	private String pathArticulos = "PracticaBinario/src/archivos/Articulos.dat";
+	private String pathAutores = "PracticaBinario/src/archivos/Autores.dat";
 
 	public GestionRevista() {
 		revistas = new ArrayList<Revista>();
@@ -34,57 +35,83 @@ public class GestionRevista {
 
 	}
 
-	public void agregarArticulo(String nombreA, String apellido, String nacionalidad, String temaAr, String idioma) {
-
-		Autor au = new Autor();
-		au.setNombre(nombreA);
-		au.setApellido(apellido);
-		au.setNacionalidad(nacionalidad);
-		autores.add(au);
-
-		Articulo ar = new Articulo();
-		ar.setIdioma(idioma);
-		ar.setTema(temaAr);
-		ar.setAutor(au);
-		articulos.add(ar);
-		try {
-			FileOutputStream file = new FileOutputStream(pathArticulos, true);
-			DataOutputStream escr = new DataOutputStream(file);
-			escr.writeUTF(nombreA);
-			escr.writeUTF(apellido);
-			escr.writeUTF(nacionalidad);
-			escr.writeUTF(temaAr);
-			escr.writeUTF(idioma);
-			escr.close();
-			file.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void agregarRevista(String nombreR, String editorial, Articulo ar) {
+	public void agregarRevista(String nombreR, String editorial, int codigo) {
 		try {
 			Revista re = new Revista();
 			re.setNombre(nombreR);
 			re.setEditorial(editorial);
-			re.setArticulo(ar);
 			FileOutputStream file = new FileOutputStream(pathRevistas, true);
 			DataOutputStream escr = new DataOutputStream(file);
 			escr.writeUTF(nombreR);
 			escr.writeUTF(editorial);
-			
+			escr.writeInt(codigo);
 			escr.close();
 			file.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public List<Revista> leerRevista() throws IOException {
 
-			revistas.add(re);
+		FileInputStream lec = null;
+		DataInputStream entrada = null;
+		try {
+			String ruta = pathRevistas;
+			lec = new FileInputStream(ruta);
+			entrada = new DataInputStream(lec);
+			
+			while (true) {
+				
+				String nombre = entrada.readUTF();
+				String editorial = entrada.readUTF();
+				int codigo=entrada.readInt();
+				Revista re = new Revista();
+				re.setNombre(nombre);
+				re.setEditorial(editorial);
+				re.setCodigo(codigo);
+				
+				revistas.add(re);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			entrada.close();
+		}
+		return revistas;
+	}
+	
+	public void agregarArticulo(String tema, String pagina, int codigo, int codigoR) {
+
+		try {
+
+			for (int i = 0; i < revistas.size(); i++) {
+				if (codigoR == revistas.get(i).getCodigo()) {
+					Articulo ar = new Articulo();
+					ar.setCodigo(codigo);
+					ar.setTema(tema);
+					ar.setPagina(pagina);
+					ar.setRevistas(revistas.get(i));
+					FileOutputStream file = new FileOutputStream(pathArticulos, true);
+					DataOutputStream escr = new DataOutputStream(file);
+					escr.writeUTF(tema);
+					escr.writeUTF(pagina);
+					escr.writeInt(codigo);
+					escr.writeUTF(revistas.get(i).getNombre());
+					///escr.writeUTF(pathRevistas.getBytes(charsetName));
+					escr.close();
+					file.close();
+				}
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public List<Articulo> leerArticulo() throws IOException {
-		
 		String aux = "";
 		FileInputStream lec = null;
 		DataInputStream entrada = null;
@@ -94,32 +121,54 @@ public class GestionRevista {
 			lec = new FileInputStream(ruta);
 			entrada = new DataInputStream(lec);
 			while (true) {
-				String nombre = entrada.readUTF();
-				String apellido = entrada.readUTF();
-				String nacionalidad = entrada.readUTF();
 				String tema = entrada.readUTF();
-				String idioma= entrada.readUTF();
+				String pagina = entrada.readUTF();
+				int codigo= entrada.readInt();
+				String revista= entrada.readUTF();
+				
 				Articulo art = new Articulo();
-				Autor au= new Autor();
-				au.setNombre(nombre);
-				au.setNacionalidad(nacionalidad);
-				au.setApellido(apellido);
-				art.setAutor(au);
-				art.setIdioma(idioma);
 				art.setTema(tema);
+				art.setPagina(pagina);
+				art.setCodigo(codigo);
 				articulos.add(art);
 
 			}
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			entrada.close();
 		}
 		return articulos;
 	}
+
+	public void agregarAutor(String nombre, String apellido, String nacionalidad, int codigoAr) {
+		try {
+			for (int i = 0; i < revistas.size(); i++) {
+				if (codigoAr == articulos.get(i).getCodigo()) {
+					Autor au = new Autor();
+					au.setNombre(nombre);
+					au.setNacionalidad(nacionalidad);
+					au.setApellido(apellido);
+					au.setArticulo(articulos.get(i));
+					FileOutputStream file = new FileOutputStream(pathAutores, true);
+					DataOutputStream escr = new DataOutputStream(file);
+					escr.writeUTF(nombre);
+					escr.writeUTF(apellido);
+					escr.writeUTF(nacionalidad);
+					escr.writeUTF(articulos.get(i).getTema());
+					escr.close();
+					file.close();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	public List<Autor> leerAutor() throws IOException {
-		
+
 		String aux = "";
 		FileInputStream lec = null;
 		DataInputStream entrada = null;
@@ -132,7 +181,7 @@ public class GestionRevista {
 				String nombre = entrada.readUTF();
 				String apellido = entrada.readUTF();
 				String nacionalidad = entrada.readUTF();
-				Autor au= new Autor();
+				Autor au = new Autor();
 				au.setNombre(nombre);
 				au.setNacionalidad(nacionalidad);
 				au.setApellido(apellido);
@@ -142,38 +191,10 @@ public class GestionRevista {
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}finally {
-			entrada.close();
-		}
-		return autores;
-	}
-
-	// leer revistas
-	public String leerRevista() throws IOException {
-		String aux = "";
-		FileInputStream lec = null;
-		DataInputStream entrada = null;
-		try {
-			String ruta = pathRevistas;
-			String line = "";
-			lec = new FileInputStream(ruta);
-			entrada = new DataInputStream(lec);
-			while (true) {
-				line = entrada.readUTF();
-				aux = aux + " " + entrada.readUTF() + "\n";
-				System.out.println(line);
-
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println("¡El fichero no existe!");
-		} catch (IOException e) {
-			//e.printStackTrace();
-		} catch (Exception e) {
-			//e.printStackTrace();
 		} finally {
 			entrada.close();
 		}
-		return aux;
+		return autores;
 	}
 
 	// validar autor
@@ -194,11 +215,11 @@ public class GestionRevista {
 	}
 
 	// metodo de validar articulo
-	public boolean validarArticulo(String nombre, String idioma) throws Exception {
+	public boolean validarArticulo(String nombre, int codigo) throws Exception {
 		int n = 1;
 		if (articulos.size() > 0) {
 			for (Articulo ar : articulos) {
-				if (ar.getTema().equals(nombre) && ar.getTema().equals(idioma)) {
+				if (ar.getTema().equals(nombre) && ar.getCodigo()==codigo) {
 					n++;
 				}
 			}
@@ -210,11 +231,11 @@ public class GestionRevista {
 	}
 
 	// metodo para validar la revista
-	public boolean validarRevista(String nombre, String editorial, Articulo articulo) throws Exception {
+	public boolean validarRevista(String nombre, String editorial, int codigo) throws Exception {
 		int n = 1;
 		if (revistas.size() > 0) {
 			for (Revista r : revistas) {
-				if (r.getNombre().equals(nombre) && r.getEditorial().equals(editorial)) {
+				if (r.getNombre().equals(nombre) && r.getEditorial().equals(editorial) && codigo==r.getCodigo()) {
 					n++;
 				}
 			}
@@ -222,6 +243,36 @@ public class GestionRevista {
 				throw new Exception("La revista ya se encuentra inscrita");
 			}
 		}
+		return true;
+	}
+	//validar codigo articulo
+	public boolean validarCodigoArticulo(int codigo) throws Exception{
+		int n=1;
+		if(articulos.size()>0){
+			for(Articulo ar:articulos){
+				if(ar.getCodigo()==codigo){
+					n++;
+				}
+			}
+			if (n == 1) {
+				throw new Exception("El Articulo no existe");
+			}
+		}
+		return true;
+	}
+	//validar codigo revista
+		public boolean validarCodigoRevista(int codigo) throws Exception{
+			int n=1;
+			if(revistas.size()>0){
+				for(Revista re:revistas){
+					if(re.getCodigo()==codigo){
+						n++;
+					}
+				}
+				if (n == 1) {
+					throw new Exception("La revista no existe");
+				}
+			}
 		return true;
 	}
 	// metodo para validar los espacion en blanco

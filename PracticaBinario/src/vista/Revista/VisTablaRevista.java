@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -61,7 +62,12 @@ public class VisTablaRevista extends JInternalFrame implements ActionListener  {
                 salir();
                 break;                
             case "btnCargar":
-                cargarDatos();
+			try {
+				cargarDatos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
                 break;
             default:
                 break;
@@ -70,8 +76,8 @@ public class VisTablaRevista extends JInternalFrame implements ActionListener  {
 	public void salir(){
 		System.exit(0);
 	}
-	public void cargarDatos(){
-		tblRevista.setModel(new ModeloRevista(gr.getRevistas()));
+	public void cargarDatos() throws IOException{
+		tblRevista.setModel(new ModeloRevista(gr.leerRevista()));
 		
 	}
 }

@@ -4,8 +4,14 @@ public class Autor {
 	private String nombre;
 	private String apellido;
 	private String nacionalidad;
+	private Articulo articulo;
 	
-	
+	public Articulo getArticulo() {
+		return articulo;
+	}
+	public void setArticulo(Articulo articulo) {
+		this.articulo = articulo;
+	}
 	public String getNombre() {
 		return nombre;
 	}
