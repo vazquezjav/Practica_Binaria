@@ -35,6 +35,7 @@ public class GestionRevista {
 
 	}
 
+
 	public void agregarRevista(String nombreR, String editorial, int codigo) {
 		try {
 			Revista re = new Revista();
@@ -52,6 +53,7 @@ public class GestionRevista {
 			e.printStackTrace();
 		}
 	}
+
 	public List<Revista> leerRevista() throws IOException {
 
 		FileInputStream lec = null;
@@ -82,7 +84,7 @@ public class GestionRevista {
 		}
 		return revistas;
 	}
-	
+
 	public void agregarArticulo(String tema, String pagina, int codigo, int codigoR) {
 
 		try {

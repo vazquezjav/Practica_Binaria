@@ -209,7 +209,7 @@ public class VisEmpresa extends JInternalFrame implements ActionListener {
 				if (gd.isEsenci(nombre, ruc, direccion)) {
 					if(gd.isChoose((Departamento) escojer.getSelectedItem())){
 						gd.agregarEmpresa(nombre, ruc, direccion, (Departamento) escojer.getSelectedItem());
-						leer() ;
+						//leer() ;
 						listar();
 						limpiar();
 					}
@@ -233,9 +233,9 @@ public class VisEmpresa extends JInternalFrame implements ActionListener {
 		}
 	}
 
-	public void leer() throws IOException {
-		txtListado.append(gd.leerDepartamento());
-	}
+//	public void leer() throws IOException {
+//		txtListado.append(gd.leerEmpresa());
+//	}
 	private void limpiar() {
 		// TODO Auto-generated method stub
 		txtNombre.setText("");

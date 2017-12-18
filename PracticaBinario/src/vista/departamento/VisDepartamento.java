@@ -217,7 +217,7 @@ public class VisDepartamento extends JInternalFrame implements ActionListener {
 				if (gd.isCedulaValida(cedula)) {
 					gd.agregarDepartamento(nombreEm, apellidoEm, cedula, nombreDepa, codigo);
 					limpiar();
-					leer();
+//					leer();
 					listar();
 				}
 			}
@@ -238,9 +238,9 @@ public class VisDepartamento extends JInternalFrame implements ActionListener {
 		}
 	}
 
-	public void leer() throws IOException {
-		txtListado.append(gd.leerDepartamento());
-	}
+//	public void leer() throws IOException {
+//		txtListado.append(gd.leerDepartamento());
+//	}
 
 	private void limpiar() {
 		txtNombreEm.setText("");

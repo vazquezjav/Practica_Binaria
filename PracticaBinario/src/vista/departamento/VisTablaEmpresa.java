@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -59,7 +60,12 @@ public class VisTablaEmpresa extends JInternalFrame implements ActionListener {
 	                break;                
 	            case "btnCargar":
 	            	System.out.println("sfsddf");
-	                cargarDatos();
+				try {
+					cargarDatos();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	                break;
 	            default:
 	                break;
@@ -68,8 +74,8 @@ public class VisTablaEmpresa extends JInternalFrame implements ActionListener {
 	public void salir(){
 		System.exit(0);
 	}
-	public void cargarDatos(){
-		 tblEmpresas.setModel((TableModel) new ModeloEmpresa(gd.getEmpresas()));
+	public void cargarDatos() throws IOException{
+		 tblEmpresas.setModel( new ModeloEmpresa(gd.leerEmpresa()));
 		
 	}
 

@@ -121,6 +121,7 @@ public class VisRevista extends JInternalFrame implements ActionListener {
 		case "guardar":
 			guardar();
 			break;
+
 		default:
 			break;
 		}
@@ -147,7 +148,6 @@ public class VisRevista extends JInternalFrame implements ActionListener {
 		editorial.setText("");
 		codigo.setText("");
 	}
-
 
 	public void listar() {
 		List<Revista> revistas = gr.getRevistas();
