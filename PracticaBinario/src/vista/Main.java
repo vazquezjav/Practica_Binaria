@@ -9,7 +9,6 @@ public class Main {
 		MiVentana mi= new MiVentana();
 		mi.setVisible(true);
 
-		System.out.println("jsjajd");
 		
 	}
 

@@ -25,8 +25,7 @@ public class Revista {
 	public void setEditorial(String editorial) {
 		this.editorial = editorial;
 	}
-	
-	
+
 	public String toString(){
 		return nombre;
 	}

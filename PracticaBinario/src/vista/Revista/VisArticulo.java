@@ -149,14 +149,14 @@ public class VisArticulo extends JInternalFrame implements ActionListener {
 		int cod1= Integer.parseInt(cod);
 		int codR1=Integer.parseInt(codR);
 		try {
-			if (gr.validarEspacio(paguina.getText(), codigoAr.getText(), codigoRe.getText(), tema.getText(),null)) {
+			//if (gr.validarEspacio(paguina.getText(), codigoAr.getText(), codigoRe.getText(), tema.getText(),null)) {
 				if(gr.validarCodigoRevista(codR1)){
 					if (gr.validarArticulo(tema.getText(), cod1)) {
 						gr.agregarArticulo(tema.getText(),paguina.getText(), cod1, codR1);
 						JOptionPane.showMessageDialog(this, "Articulo registrado", "Mensaje de información",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
-				}
+				//}
 			}
 		} catch (Exception e) {
 
